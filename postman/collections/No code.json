@@ -1,0 +1,163 @@
+{
+	"info": {
+		"_postman_id": "12fce54e-6d1d-4932-a21f-3cd862faf3e4",
+		"name": "No code",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_uid": "24249578-12fce54e-6d1d-4932-a21f-3cd862faf3e4"
+	},
+	"item": [
+		{
+			"name": "Create user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4953dfb7-f7de-4dfe-bbb8-43934c92db0e",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "9c09696a-0243-4c46-a0ec-1317f1d8a0c1",
+						"exec": [
+							"let full_name = pm.variables.replaceIn(\"{{$randomFullName}}\")",
+							"pm.collectionVariables.set(\"full_name\", `${full_name}`)",
+							"",
+							"let email = pm.variables.replaceIn(\"{{$randomEmail}}\")",
+							"pm.collectionVariables.set(\"email\", `${email}`)",
+							"",
+							"let password = pm.variables.replaceIn(\"{{$randomPassword}}\")",
+							"pm.collectionVariables.set(\"password\", `${password}`)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "d8835043-cbf8-4018-9e53-67b4d22508c5",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true,
+				"disabledSystemHeaders": {},
+				"followAuthorizationHeader": false
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Softr-Domain",
+						"value": "jere237.softr.app",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"full_name\": \"{{full_name}}\",\n    \"email\": \"{{email}}\",\n    \"password\": \"{{password}}\",\n    \"generate_magic_link\": false\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{curl}}",
+					"host": [
+						"{{curl}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete user",
+			"id": "ae343137-c291-4ffc-b116-ac193bf93d4e",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Softr-Domain",
+						"value": "jere237.softr.app",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{curl}}/{{email}}",
+					"host": [
+						"{{curl}}"
+					],
+					"path": [
+						"{{email}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": [
+			{
+				"key": "value",
+				"value": "khIbAyJIU5CIuh1oDuBRx1s49",
+				"type": "string"
+			},
+			{
+				"key": "key",
+				"value": "Softr-Api-Key",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "f83e230c-b38b-4fc9-8223-47e1b0430916",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "4e63a5da-87ae-4910-ab65-1f15e00f3372",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "88c03ef5-1f36-4dc0-9bf5-0a4c4ed0e1d6",
+			"key": "curl",
+			"value": "https://studio-api.softr.io/v1/api/users",
+			"type": "string"
+		},
+		{
+			"id": "7320fce6-828d-4e2e-8a78-1606a7b14d36",
+			"key": "full_name",
+			"value": ""
+		},
+		{
+			"id": "084c363b-0c1f-4f6c-bc81-953bda23970c",
+			"key": "email",
+			"value": ""
+		},
+		{
+			"id": "006cb57f-1c18-4b19-9f93-e04b7f42e2cc",
+			"key": "password",
+			"value": ""
+		}
+	]
+}
