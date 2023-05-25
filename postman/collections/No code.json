@@ -12,11 +12,59 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "4953dfb7-f7de-4dfe-bbb8-43934c92db0e",
+						"id": "84e23354-2372-410f-a828-b43581af1f19",
 						"exec": [
-							"pm.test(\"Status code is 200\", function () {",
-							"    pm.response.to.have.status(200);",
-							"});"
+							"",
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"var jsonDataResponse = pm.response.json()",
+							"var actualFullName = jsonDataResponse.fullName",
+							"var actualEmail = jsonDataResponse.email",
+							"",
+							"var jsonDataRequest = JSON.parse(pm.request.body)",
+							"var expectedFullName = jsonDataRequest.fullName",
+							"var expectedEmail = jsonDataRequest.email",
+							"",
+							"pm.test(\"Full name is correct\", function () {",
+							"    pm.expect(actualFullName).to.eql(expectedFullName);",
+							"});",
+							"",
+							"pm.test(\"Email is correct\", function () {",
+							"    pm.expect(actualEmail).to.eql(expectedEmail);",
+							"});",
+							"",
+							"var schema = {",
+							"    \"type\": \"object\",",
+							"    \"properties\":{",
+							"        \"full_name\":{",
+							"            \"type\": \"string\"",
+							"    },",
+							"    \"email\":{",
+							"            \"type\": \"string\"",
+							"    },",
+							"    /*\"magic_link\":{",
+							"            \"type\": \"string\"",
+							"    },*/",
+							"    \"created\":{",
+							"            \"type\": \"string\"",
+							"    },",
+							"    \"updated\":{",
+							"            \"type\": \"string\"",
+							"        }",
+							"    },",
+							"    \"required\": [\"full_name\", \"email\", \"created\", \"updated\"]  ",
+							"};",
+							"",
+							"pm.test('Schema is valid', function () {",
+							"    pm.expect(tv4.validate(jsonDataResponse, schema)).to.be.true;",
+							"});",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"",
+							""
 						],
 						"type": "text/javascript"
 					}
@@ -24,7 +72,7 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "9c09696a-0243-4c46-a0ec-1317f1d8a0c1",
+						"id": "94e6eb0a-de9f-4ec0-85b4-0bf8773797ed",
 						"exec": [
 							"let full_name = pm.variables.replaceIn(\"{{$randomFullName}}\")",
 							"pm.collectionVariables.set(\"full_name\", `${full_name}`)",
@@ -74,6 +122,20 @@
 		},
 		{
 			"name": "Delete user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a6a25dc5-fc89-4987-96b9-3791ca8f876c",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"id": "ae343137-c291-4ffc-b116-ac193bf93d4e",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
@@ -139,23 +201,23 @@
 	],
 	"variable": [
 		{
-			"id": "88c03ef5-1f36-4dc0-9bf5-0a4c4ed0e1d6",
+			"id": "b5573770-d717-4bc3-bd32-264da45d0d2f",
 			"key": "curl",
 			"value": "https://studio-api.softr.io/v1/api/users",
 			"type": "string"
 		},
 		{
-			"id": "7320fce6-828d-4e2e-8a78-1606a7b14d36",
+			"id": "b1a70fe6-a6ea-413f-a3d6-e012252b2a29",
 			"key": "full_name",
 			"value": ""
 		},
 		{
-			"id": "084c363b-0c1f-4f6c-bc81-953bda23970c",
+			"id": "9033a4bf-5849-4734-bbc4-5945d89a1f8f",
 			"key": "email",
 			"value": ""
 		},
 		{
-			"id": "006cb57f-1c18-4b19-9f93-e04b7f42e2cc",
+			"id": "68ccc52f-87ad-4a07-b42c-d1b4940dc61d",
 			"key": "password",
 			"value": ""
 		}
